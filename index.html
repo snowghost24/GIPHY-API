@@ -1,19 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- bootstrap link -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css'
-    />
-   <!-- jquery link -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- css link -->
-   <link rel="stylesheet" href="assets/css/style.css">  
-   <title>Gyphy API</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+    crossorigin="anonymous">
+  <title>Giphy API</title>
+
+  <style>
+    #myInput {
+      width: 400px;
+      margin-left: 10px;
+    }
+
+    .form-group{
+      margin-left: 10px;
+      width: 300px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
+
 <body>
-   
+  <h1>Giphy, World!</h1>
+  <div id="btn-div">
+
+  </div>
+  <form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Seach Sport Giphy's</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Sport">
+      <small class="form-text text-muted">Type a sport to add to the array button</small>
+    </div>
+  </form>
+  <script>
+    var sports = ["football", "basketball", "volleyball", "tennis", "swimming", "baseball", "soccer", "rugby", "snowboarding", "skiing", "track"];
+
+
+
+    for (var i = 0; i < sports.length; i++) {
+      console.log(sports[i]);
+      var magicButton = document.createElement("BUTTON");
+      var buttonText = document.createTextNode(sports[i]);
+      magicButton.classList.add("charged-btn", "btn")
+      magicButton.appendChild(buttonText);
+      document.getElementById("btn-div").appendChild(magicButton);
+    }
+  </script>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
