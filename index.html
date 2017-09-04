@@ -26,6 +26,10 @@
     .charged-btn {
       margin: 4px;
     }
+
+    .gifImg {
+      max-width: 300px;
+    }
   </style>
 </head>
 
@@ -52,10 +56,6 @@
   <script>
     var sports = ["football", "basketball", "volleyball", "tennis", "swimming", "baseball", "soccer", "rugby", "snowboarding", "skiing", "track"];
 
-
-
-
-    
     //grabs values from the input field and pushed them into the sport array 
     //then calls the create button function
     document.querySelector("#btn-sub").addEventListener("click", (event) => {
@@ -97,24 +97,30 @@ function ajaxRequest(queryURL) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function (response) {
         if (this.readyState == 4 && this.status == 200) {
-         
-           var data = JSON.parse(this.response).data[0].images.original.url;
-          console.log(JSON.parse(this.response).data[0].images.original.url);
-          console.log(JSON.parse(this.response).data);
-
-
         
-          // document.querySelector("#anImg").setAttribute("src",data);
+          // var data = JSON.parse(this.response).data[0].images.original.url;
+          // console.log(JSON.parse(this.response).data[0]);
+          var dataArray = JSON.parse(this.response).data;
 
-            
-           
+          for (let i = 0; i < dataArray.length;i++){
+            var gifImg = document.createElement("IMG");
+            var rating = JSON.parse(this.response).data[i].rating;
+            var p = document.createElement("P");
+            var pnote = document.createTextNode("Rating: " + rating)
+            p.append(pnote);
+            gifImg.setAttribute("src", JSON.parse(this.response).data[i].images.fixed_height.url);
+            gifImg.classList.add("responseImg");
+            document.querySelector(".gif-section").append(p);
+            document.querySelector(".gif-section").append(gifImg);
+            // console.log(JSON.parse(this.response).data[i].images.original.url)
+          }
 
-        
-          console.log(JSON.parse(this.response).data[0].url);
-          var gifImg = document.createElement("IMG");
-          gifImg.setAttribute("src", data);
-          document.querySelector(".gif-section").append(gifImg);
 
+
+
+          // console.log(JSON.parse(this.response).data[0].images.original.url);
+          // console.log("this is data array "+ dataArray);
+          // console.log(JSON.parse(this.response).data[0].url);
             // $(".gif-section").prepend(personImage);
         }
       };
