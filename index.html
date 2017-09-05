@@ -8,6 +8,8 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
     crossorigin="anonymous">
+      <!-- jquery link -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <title>Giphy API</title>
 
@@ -53,6 +55,10 @@
   <!-- <img src="https://media1.giphy.com/media/gDOb4scISy3Sg/giphy.gif" alt=""> -->
   <!-- <img id="anImg" src="" alt=""> -->
 
+<h1>Species</h1>
+<p>Click on a species to see what type it is:</p>
+
+
   <script>
     var sports = ["football", "basketball", "volleyball", "tennis", "swimming", "baseball", "soccer", "rugby", "snowboarding", "skiing", "track"];
 
@@ -94,18 +100,25 @@
       ajaxRequest(queryURL);
     })
 
+
     function ajaxRequest(queryURL) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function (response) {
         if (this.readyState == 4 && this.status == 200) {
           var dataArray = JSON.parse(this.response).data;
+          console.log("this is the image" + JSON.parse(this.response).data[0].images.fixed_height_still);
           for (let i = 0; i < dataArray.length; i++) {
+            
             var gifImg = document.createElement("IMG");
             var rating = JSON.parse(this.response).data[i].rating;
             var p = document.createElement("P");
             var pnote = document.createTextNode("Rating: " + rating)
             p.append(pnote);
-            gifImg.setAttribute("src", JSON.parse(this.response).data[i].images.fixed_height.url);
+            console.log(gifImg);
+            gifImg.setAttribute("src", JSON.parse(this.response).data[i].images.fixed_height_still.url);
+            gifImg.dataset.still=JSON.parse(this.response).data[i].images.fixed_height_still.url;
+            gifImg.dataset.state= "still";
+            gifImg.dataset.animate=JSON.parse(this.response).data[i].images.fixed_height.url;
             gifImg.classList.add("responseImg");
             document.querySelector(".gif-section").append(p);
             document.querySelector(".gif-section").append(gifImg);
@@ -115,6 +128,28 @@
       xhttp.open("GET", queryURL, true);
       xhttp.send();
     }
+
+    document.addEventListener("click",(e)=>{
+
+      if (e.target.tagName == "IMG" && e.target.getAttribute("data-state")== "still"){
+        e.target.setAttribute("data-state","animate");
+        e.target.setAttribute("src", e.target.getAttribute("data-animate"));
+
+        console.log(e.target.getAttribute("data-state"));
+      } else if (e.target.tagName == "IMG" && e.target.getAttribute("data-state")== "animate"){
+        e.target.setAttribute("data-state","still");
+        console.log(e.target.getAttribute("data-state"));
+        e.target.setAttribute("src", e.target.getAttribute("data-still"));
+
+
+
+      }
+      
+    })
+
+
+
+    
   </script>
 
 
