@@ -8,7 +8,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
     crossorigin="anonymous">
-    
+
   <title>Giphy API</title>
 
   <style>
@@ -50,7 +50,7 @@
   <div class="gif-section">
 
   </div>
-<!-- <img src="https://media1.giphy.com/media/gDOb4scISy3Sg/giphy.gif" alt=""> -->
+  <!-- <img src="https://media1.giphy.com/media/gDOb4scISy3Sg/giphy.gif" alt=""> -->
   <!-- <img id="anImg" src="" alt=""> -->
 
   <script>
@@ -83,26 +83,23 @@
     //call to create first set of buttons
     createBtn();
 
-//Making ajax request
-document.querySelector("#btn-div").addEventListener("click", function (e) {
+      //Making ajax request
+      //selects button divs and listens for an event
+    document.querySelector("#btn-div").addEventListener("click", function (e) {
+      //find the button html and passes to the url 
+      document.querySelector(".gif-section").innerHTML = "";
       sportEvent = e.target.innerHTML;
-      console.log(sportEvent);
-      // var queryURL = "https://api.giphy.com/v1/gifs/trending?&api_key=dc6zaTOxFJmzC&limit=10";
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-    sportEvent  + "&api_key=dc6zaTOxFJmzC&limit=10";
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+      sportEvent + "&api_key=dc6zaTOxFJmzC&limit=10";
       ajaxRequest(queryURL);
-
     })
-function ajaxRequest(queryURL) {
+
+    function ajaxRequest(queryURL) {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function (response) {
         if (this.readyState == 4 && this.status == 200) {
-        
-          // var data = JSON.parse(this.response).data[0].images.original.url;
-          // console.log(JSON.parse(this.response).data[0]);
           var dataArray = JSON.parse(this.response).data;
-
-          for (let i = 0; i < dataArray.length;i++){
+          for (let i = 0; i < dataArray.length; i++) {
             var gifImg = document.createElement("IMG");
             var rating = JSON.parse(this.response).data[i].rating;
             var p = document.createElement("P");
@@ -112,34 +109,12 @@ function ajaxRequest(queryURL) {
             gifImg.classList.add("responseImg");
             document.querySelector(".gif-section").append(p);
             document.querySelector(".gif-section").append(gifImg);
-            // console.log(JSON.parse(this.response).data[i].images.original.url)
           }
-
-
-
-
-          // console.log(JSON.parse(this.response).data[0].images.original.url);
-          // console.log("this is data array "+ dataArray);
-          // console.log(JSON.parse(this.response).data[0].url);
-            // $(".gif-section").prepend(personImage);
         }
       };
-      xhttp.open("GET",queryURL, true);
+      xhttp.open("GET", queryURL, true);
       xhttp.send();
     }
-
-
- 
-
-
-
-
-
-
-
-
- 
-
   </script>
 
 
@@ -151,5 +126,4 @@ function ajaxRequest(queryURL) {
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
 </body>
-
 </html>
