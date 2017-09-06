@@ -10,10 +10,36 @@
     crossorigin="anonymous">
       <!-- jquery link -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <title>Giphy API</title>
+   <!-- These right here add the sport fonts -->
+   <link rel="stylesheet" href="assets/css/specimen_files/specimen_stylesheet.css" type="text/css" charset="utf-8" />
+   <link rel="stylesheet" href="assets/css/stylesheet.css" type="text/css" charset="utf-8" />
+   <link href="https://fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet"> 
+    <title>Giphy Center</title>
 
   <style>
+
+    /* body{
+      background-image: url("/Users/Snowghost/Documents/GIPHY-API/assets/images/broadcast.jpg");
+      background-size:     cover;                      
+      background-repeat:   no-repeat;
+      background-position: center center;     
+    } */
+   
+    img{
+      border: 6px solid black;
+    }
+    h1{
+      margin: 50px;
+      text-align: center;
+      font-size: 150px;
+      margin: 0px;
+      padding-top: 70px;
+      color: black;
+      background-color: #ff0000;
+      
+      font-family: 'sf_sports_nightregular';
+
+    }
     #myInput {
       width: 400px;
       margin-left: 10px;
@@ -31,21 +57,105 @@
 
     .gifImg {
       max-width: 300px;
+      border: 3px solid brown;
     }
+
+    .gif-section{
+      display: flex;
+      /* max-width: 1500px; */
+      flex-wrap: wrap; 
+    justify-content: space-around;
+
+    }
+
+    .imgDivd {
+      margin-right: 50px;
+      min-width: 500px;
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      
+    }
+
+    .jumbotron {
+      padding: 0px;
+    }
+
+p{
+  text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-size: 25px;
+}
+
+    #secondt {
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-size: 40px;
+      
+      
+    }
+
+    /* .container {
+      background-size: contain;
+
+    } */
+
+    .background-wrap {
+         position: fixed;
+         z-index: -1000;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         top: 0;
+         left: 0;
+      }
+
+      #background-video {
+         position: fixed;
+         z-index: -1000;
+         max-width: 100%;
+         top: 0;
+         left: 0;
+      }
+
+      #btn-sub {
+        background-color: #ff0000;
+        color: black;
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      label {
+        color: white;
+      }
+
   </style>
 </head>
 
 <body>
-  <h1>Giphy, World!</h1>
+    <audio id="bflat"> </audio>
+    <div class="background-wrap">
+        <video id="background-video" autoplay loop preload="auto">
+           <source src="assets/images/hd0121.mp4" type="video/mp4">
+           <!-- <source src="imgandvid/people_walking.webm" type="video/webm"> -->
+        </video>
+     </div>
+  <div class="container">
+  <div class="jumbotron">
+      <h1>Giphy Center</h1>
+      <p id="secondt">The World Wide Leader In Gifs</p>
+  </div>
+  
   <div id="btn-div">
 
   </div>
   <form>
     <div class="form-group">
-      <label for="sportInput">Seach Sport Giphy's</label>
+      <label for="sportInput">Seach Giphy Sport</label>
       <input type="text" class="form-control" id="sportInput" placeholder="Enter Sport">
-      <small class="form-text text-muted">Type a sport to add to the array button</small>
-      <button id="btn-sub" type="submit" class="btn btn-primary">Add Button</button>
+      <!-- <small class="form-text text-muted">Type a sport to add to the array button</small> -->
+      <button id="btn-sub" type="submit" class="btn">Add Button</button>
     </div>
   </form>
 
@@ -54,12 +164,14 @@
   </div>
   <!-- <img src="https://media1.giphy.com/media/gDOb4scISy3Sg/giphy.gif" alt=""> -->
   <!-- <img id="anImg" src="" alt=""> -->
-
-<h1>Species</h1>
-<p>Click on a species to see what type it is:</p>
-
-
+</div>
   <script>
+
+var bflat = new Audio();
+bflat.src = "assets/audio/espnaudio.mp3";
+function PlaySound() {
+    bflat.play();
+}
     var sports = ["football", "basketball", "volleyball", "tennis", "swimming", "baseball", "soccer", "rugby", "snowboarding", "skiing", "track"];
 
     //grabs values from the input field and pushed them into the sport array 
@@ -92,6 +204,7 @@
       //Making ajax request
       //selects button divs and listens for an event
     document.querySelector("#btn-div").addEventListener("click", function (e) {
+      PlaySound();
       //find the button html and passes to the url 
       document.querySelector(".gif-section").innerHTML = "";
       sportEvent = e.target.innerHTML;
@@ -108,7 +221,7 @@
           var dataArray = JSON.parse(this.response).data;
           console.log("this is the image" + JSON.parse(this.response).data[0].images.fixed_height_still);
           for (let i = 0; i < dataArray.length; i++) {
-            
+            var imgDiv = document.createElement("DIV");
             var gifImg = document.createElement("IMG");
             var rating = JSON.parse(this.response).data[i].rating;
             var p = document.createElement("P");
@@ -120,8 +233,10 @@
             gifImg.dataset.state= "still";
             gifImg.dataset.animate=JSON.parse(this.response).data[i].images.fixed_height.url;
             gifImg.classList.add("responseImg");
-            document.querySelector(".gif-section").append(p);
-            document.querySelector(".gif-section").append(gifImg);
+            imgDiv.classList.add("imgDivd");
+            imgDiv.append(p);
+            imgDiv.append(gifImg);
+            document.querySelector(".gif-section").append(imgDiv);
           }
         }
       };
@@ -130,34 +245,23 @@
     }
 
     document.addEventListener("click",(e)=>{
+      //espn audio
+     
 
       if (e.target.tagName == "IMG" && e.target.getAttribute("data-state")== "still"){
         e.target.setAttribute("data-state","animate");
         e.target.setAttribute("src", e.target.getAttribute("data-animate"));
-
+       
         console.log(e.target.getAttribute("data-state"));
       } else if (e.target.tagName == "IMG" && e.target.getAttribute("data-state")== "animate"){
         e.target.setAttribute("data-state","still");
         console.log(e.target.getAttribute("data-state"));
         e.target.setAttribute("src", e.target.getAttribute("data-still"));
-
-
-
-      }
-      
-    })
-
-
-
-    
+      }  
+    })  
   </script>
 
 
-
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-    crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
 </body>
